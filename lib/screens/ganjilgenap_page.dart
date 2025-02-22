@@ -1,28 +1,38 @@
 import 'package:flutter/material.dart';
 
-class TotalDigitsPage extends StatefulWidget {
-  const TotalDigitsPage({super.key});
+class GanjilGenapPage extends StatefulWidget {
+  const GanjilGenapPage({super.key});
 
   @override
-  TotalDigitsPageState createState() => TotalDigitsPageState();
+  GanjilGenapPageState createState() => GanjilGenapPageState();
 }
 
-class TotalDigitsPageState extends State<TotalDigitsPage> {
+class GanjilGenapPageState extends State<GanjilGenapPage> {
   final TextEditingController controller = TextEditingController();
-  int totalDigits = 0;
+  String result = "";
 
-  void countDigits() {
-    String input =
-        controller.text.replaceAll(RegExp(r'[^0-9]'), ''); // Hanya angka
+  void checkGanjilGenap() {
+    String input = controller.text.trim();
+    double? number = double.tryParse(input);
+
     setState(() {
-      totalDigits = input.length; // Hitung jumlah angka dalam input
+      if (number == null) {
+        result = "Masukkan angka yang valid";
+      } else if (number % 1 != 0) {
+        result = "Masukkan bilangan bulat";
+      } else {
+        int intNumber = number.toInt();
+        result = (intNumber % 2 == 0)
+            ? "Angka $intNumber adalah Genap"
+            : "Angka $intNumber adalah Ganjil";
+      }
     });
   }
 
   void clearInput() {
     setState(() {
       controller.clear();
-      totalDigits = 0;
+      result = "";
     });
   }
 
@@ -31,7 +41,7 @@ class TotalDigitsPageState extends State<TotalDigitsPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "CEK DIGIT",
+          "GANJIL GENAP",
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -39,7 +49,7 @@ class TotalDigitsPageState extends State<TotalDigitsPage> {
           ),
         ),
         centerTitle: true,
-        backgroundColor: Color(0xFF5B0583), // Warna AppBar ungu tua
+        backgroundColor: Color(0xFF5B0583),
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
@@ -51,8 +61,8 @@ class TotalDigitsPageState extends State<TotalDigitsPage> {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color(0xFF1D1C4C), // Warna atas
-              Color(0xFFC474E6), // Warna bawah
+              Color(0xFF1D1C4C),
+              Color(0xFFC474E6),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -68,7 +78,7 @@ class TotalDigitsPageState extends State<TotalDigitsPage> {
                   width: 320,
                   padding: EdgeInsets.all(20),
                   decoration: BoxDecoration(
-                    color: Color(0xFFE5E5E5), // Warna putih keabu-abuan
+                    color: Color(0xFFE5E5E5),
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
@@ -80,9 +90,8 @@ class TotalDigitsPageState extends State<TotalDigitsPage> {
                   ),
                   child: Column(
                     children: [
-                      // Label
                       Text(
-                        "Teks atau Angka",
+                        "Masukkan Angka",
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -90,8 +99,6 @@ class TotalDigitsPageState extends State<TotalDigitsPage> {
                         ),
                       ),
                       SizedBox(height: 15),
-
-                      // Input Field
                       TextField(
                         controller: controller,
                         decoration: InputDecoration(
@@ -102,11 +109,9 @@ class TotalDigitsPageState extends State<TotalDigitsPage> {
                           filled: true,
                           fillColor: Colors.white,
                         ),
-                        keyboardType: TextInputType.text,
+                        keyboardType: TextInputType.number,
                       ),
                       SizedBox(height: 15),
-
-                      // Tombol Cek dan Clear
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -130,7 +135,7 @@ class TotalDigitsPageState extends State<TotalDigitsPage> {
                             ),
                           ),
                           ElevatedButton(
-                            onPressed: countDigits,
+                            onPressed: checkGanjilGenap,
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Color(0xFF5B0583),
                               shape: RoundedRectangleBorder(
@@ -151,8 +156,6 @@ class TotalDigitsPageState extends State<TotalDigitsPage> {
                         ],
                       ),
                       SizedBox(height: 20),
-
-                      // Output
                       Container(
                         width: double.infinity,
                         padding: EdgeInsets.all(12),
@@ -162,7 +165,7 @@ class TotalDigitsPageState extends State<TotalDigitsPage> {
                           border: Border.all(color: Color(0xFF5B0583)),
                         ),
                         child: Text(
-                          "Jumlah Total Angka: $totalDigits",
+                          result,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 16,

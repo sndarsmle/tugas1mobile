@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tugas1mobile/screens/ganjilgenap_page.dart';
 import 'package:tugas1mobile/screens/profil_page.dart';
 import 'total_digits_page.dart';
+import 'hitung_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -45,7 +47,8 @@ class HomePage extends StatelessWidget {
                 children: [
                   _buildMenuItem(context, 'Profil', Icons.group),
                   _buildMenuItem(context, 'Hitung', Icons.calculate),
-                  _buildMenuItem(context, 'Ganjil Genap', Icons.format_list_numbered),
+                  _buildMenuItem(
+                      context, 'Ganjil Genap', Icons.format_list_numbered),
                   _buildMenuItem(context, 'Total Digit', Icons.numbers),
                 ],
               ),
@@ -96,6 +99,16 @@ class HomePage extends StatelessWidget {
               context,
               MaterialPageRoute(builder: (context) => ProfilePage()),
             );
+          } else if (title == 'Hitung') {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HitungPage()),
+            );
+          } else if (title == 'Ganjil Genap') {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => GanjilGenapPage()),
+            );
           } else if (title == 'Total Digit') {
             Navigator.push(
               context,
@@ -110,7 +123,8 @@ class HomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: 60, color: Color(0xFF5B0583)), // Warna ikon ungu tua
+            Icon(icon,
+                size: 60, color: Color(0xFF5B0583)), // Warna ikon ungu tua
             SizedBox(height: 10),
             Text(
               title,

@@ -44,13 +44,13 @@ class ProfilePage extends StatelessWidget {
                 children: [
                   _buildProfileCard(
                     imagePath: 'assets/images/anggota1.jpg',
-                    name: 'Ageng Sandar R.',
+                    name: 'Ageng Sandar',
                     nim: '123220011',
                   ),
                   SizedBox(width: 20),
                   _buildProfileCard(
                     imagePath: 'assets/images/anggota2.jpg',
-                    name: 'Mohamad Risqi A.',
+                    name: 'Mohamad Risqi',
                     nim: '123220021',
                   ),
                 ],
@@ -85,7 +85,8 @@ class ProfilePage extends StatelessWidget {
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(15),
-            child: Image.asset(imagePath, height: 120, width: 120, fit: BoxFit.cover),
+            child: Image.asset(imagePath,
+                height: 120, width: 120, fit: BoxFit.cover),
           ),
           SizedBox(height: 10),
           Text(
