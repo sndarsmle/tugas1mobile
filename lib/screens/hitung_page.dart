@@ -11,7 +11,7 @@ class HitungPageState extends State<HitungPage> {
   final TextEditingController num1Controller = TextEditingController();
   final TextEditingController num2Controller = TextEditingController();
   double result = 0.0;
-  final int maxLength = 20; // Batas maksimum digit angka
+  final int maxLength = 15; // Batas maksimum digit angka
 
   void validateAndCalculate(Function(double, double) operation) {
     double num1 =

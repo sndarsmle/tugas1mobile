@@ -10,6 +10,7 @@ class GanjilGenapPage extends StatefulWidget {
 class GanjilGenapPageState extends State<GanjilGenapPage> {
   final TextEditingController controller = TextEditingController();
   String result = "";
+  final int maxLength = 15;
 
   void checkGanjilGenap() {
     String input = controller.text.trim();
@@ -18,6 +19,8 @@ class GanjilGenapPageState extends State<GanjilGenapPage> {
     setState(() {
       if (number == null) {
         result = "Masukkan angka yang valid";
+      } else if (input.length > maxLength) {
+        result = "Maksimum $maxLength digit";
       } else if (number % 1 != 0) {
         result = "Masukkan bilangan bulat";
       } else {
@@ -101,6 +104,7 @@ class GanjilGenapPageState extends State<GanjilGenapPage> {
                       SizedBox(height: 15),
                       TextField(
                         controller: controller,
+                        onChanged: (text) => setState(() {}),
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(30),
@@ -108,10 +112,12 @@ class GanjilGenapPageState extends State<GanjilGenapPage> {
                           ),
                           filled: true,
                           fillColor: Colors.white,
+                          counterText: "${controller.text.length}/$maxLength",
                         ),
+                        maxLength: maxLength,
                         keyboardType: TextInputType.number,
                       ),
-                      SizedBox(height: 15),
+                      SizedBox(height: 5),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
