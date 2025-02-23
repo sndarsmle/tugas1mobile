@@ -13,14 +13,23 @@ class HitungPageState extends State<HitungPage> {
   double result = 0.0;
   final int maxLength = 15; // Batas maksimum digit angka
 
-  void validateAndCalculate(Function(double, double) operation) {
+  void calculateResult(String operation) {
     double num1 =
         double.tryParse(num1Controller.text.replaceAll(',', '.')) ?? 0.0;
     double num2 =
         double.tryParse(num2Controller.text.replaceAll(',', '.')) ?? 0.0;
 
     setState(() {
-      result = operation(num1, num2);
+      switch (operation) {
+        case '+':
+          result = num1 + num2;
+          break;
+        case '-':
+          result = num1 - num2;
+          break;
+        default:
+          result = 0.0;
+      }
     });
   }
 
@@ -71,128 +80,105 @@ class HitungPageState extends State<HitungPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  width: 320,
-                  padding: const EdgeInsets.all(20),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFE5E5E5),
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        blurRadius: 10,
-                        offset: const Offset(0, 5),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    children: [
-                      TextFormField(
-                        controller: num1Controller,
-                        decoration: InputDecoration(
-                          labelText: "Angka Pertama",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30)),
-                          filled: true,
-                          fillColor: Colors.white,
+                    width: 320,
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFE5E5E5),
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          blurRadius: 10,
+                          offset: const Offset(0, 5),
                         ),
-                        keyboardType:
-                            TextInputType.numberWithOptions(decimal: true),
-                        maxLength: maxLength,
-                        validator: (value) => validateInput(value ?? ""),
-                      ),
-                      const SizedBox(height: 15),
-                      TextFormField(
-                        controller: num2Controller,
-                        decoration: InputDecoration(
-                          labelText: "Angka Kedua",
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(30)),
-                          filled: true,
-                          fillColor: Colors.white,
-                        ),
-                        keyboardType:
-                            TextInputType.numberWithOptions(decimal: true),
-                        maxLength: maxLength,
-                        validator: (value) => validateInput(value ?? ""),
-                      ),
-                      const SizedBox(height: 15),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          ElevatedButton(
-                            onPressed: clearInput,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.red,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30)),
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 30, vertical: 12),
-                            ),
-                            child: const Text("CLEAR",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white)),
+                      ],
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          "Masukkan Angka",
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF5B0583),
                           ),
-                          ElevatedButton(
-                            onPressed: () =>
-                                validateAndCalculate((a, b) => a - b),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.orange,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30)),
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 30, vertical: 12),
-                            ),
-                            child: const Text("-",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white)),
-                          ),
-                          ElevatedButton(
-                            onPressed: () =>
-                                validateAndCalculate((a, b) => a + b),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF5B0583),
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30)),
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 30, vertical: 12),
-                            ),
-                            child: const Text("+",
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white)),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                      Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: const Color(0xFF5B0583)),
                         ),
-                        child: Text(
-                          "Hasil: $result",
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xFF5B0583)),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                        const SizedBox(height: 10), // Tambahkan sedikit jarak
+                        inputField(num1Controller, "Angka Pertama"),
+                        const SizedBox(height: 15),
+                        inputField(num2Controller, "Angka Kedua"),
+                        const SizedBox(height: 15),
+                        buttonRow(),
+                        const SizedBox(height: 15),
+                        resultContainer(),
+                      ],
+                    )),
               ],
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget inputField(TextEditingController controller, String label) {
+    return TextFormField(
+      controller: controller,
+      decoration: InputDecoration(
+        labelText: label,
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
+        filled: true,
+        fillColor: Colors.white,
+      ),
+      keyboardType: TextInputType.numberWithOptions(decimal: true),
+      maxLength: maxLength,
+      validator: (value) => validateInput(value ?? ""),
+    );
+  }
+
+  Widget buttonRow() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        button("CLEAR", Colors.red, clearInput),
+        button("-", Colors.orange, () => calculateResult('-')),
+        button("+", const Color(0xFF5B0583), () => calculateResult('+')),
+      ],
+    );
+  }
+
+  Widget button(String text, Color color, VoidCallback onPressed) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: color,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+      ),
+      child: Text(
+        text,
+        style: const TextStyle(
+            fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
+      ),
+    );
+  }
+
+  Widget resultContainer() {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: const Color(0xFF5B0583)),
+      ),
+      child: Text(
+        "Hasil: $result",
+        textAlign: TextAlign.center,
+        style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: Color(0xFF5B0583)),
       ),
     );
   }

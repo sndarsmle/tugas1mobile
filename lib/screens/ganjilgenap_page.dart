@@ -19,8 +19,6 @@ class GanjilGenapPageState extends State<GanjilGenapPage> {
     setState(() {
       if (number == null) {
         result = "Masukkan angka yang valid";
-      } else if (input.length > maxLength) {
-        result = "Maksimum $maxLength digit";
       } else if (number % 1 != 0) {
         result = "Masukkan bilangan bulat";
       } else {
