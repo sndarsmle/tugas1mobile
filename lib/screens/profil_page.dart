@@ -16,7 +16,7 @@ class ProfilePage extends StatelessWidget {
           ),
         ),
         centerTitle: true,
-        backgroundColor: Color(0xFF5B0583), // Warna AppBar ungu tua
+        backgroundColor: Color(0xFF1D1C4C),
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
@@ -28,8 +28,8 @@ class ProfilePage extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color(0xFF1D1C4C), // Warna atas
-              Color(0xFFC474E6), // Warna bawah
+              Color(0xFF1D1C4C),
+              Color(0xFFC474E6),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -84,9 +84,13 @@ class ProfilePage extends StatelessWidget {
       child: Column(
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(15),
-            child: Image.asset(imagePath,
-                height: 120, width: 120, fit: BoxFit.cover),
+            borderRadius: BorderRadius.circular(10),
+            child: Image.asset(
+              imagePath,
+              height: 160, // Mengatur aspek rasio 3x4
+              width: 120,
+              fit: BoxFit.cover,
+            ),
           ),
           SizedBox(height: 10),
           Text(
@@ -94,7 +98,7 @@ class ProfilePage extends StatelessWidget {
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF5B0583), // Warna teks ungu tua
+              color: Color(0xFF5B0583),
             ),
           ),
           SizedBox(height: 5),

@@ -38,113 +38,139 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        width: double.infinity,
+        height: double.infinity,
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              Color(0xFF1D1C4C), // Warna atas
-              Color(0xFFC474E6), // Warna bawah
-            ],
+            colors: [Color(0xFF1D1C4C), Color(0xFFC474E6)],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
         ),
         child: Center(
           child: SingleChildScrollView(
-            child: Container(
-              width: 320,
-              padding: EdgeInsets.all(25),
-              decoration: BoxDecoration(
-                color: Color(0xFFE5E5E5), // Warna putih keabu-abuan
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.2),
-                    blurRadius: 10,
-                    offset: Offset(0, 5),
-                  ),
-                ],
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  // Judul
-                  Text(
-                    'SELAMAT DATANG',
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFF5B0583), // Warna ungu tua
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // Logo
+                Container(
+                  width: 100,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/hitungku_logo.png'),
+                      fit: BoxFit.contain,
                     ),
                   ),
-                  SizedBox(height: 20),
+                ),
+                SizedBox(height: 20),
 
-                  // Username Input
-                  TextField(
-                    controller: usernameController,
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.person, color: Color(0xFF5B0583)),
-                      hintText: 'Username',
-                      hintStyle: TextStyle(color: Colors.black54),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide: BorderSide(color: Color(0xFF5B0583)),
+                // Card untuk form login
+                Container(
+                  width: 320,
+                  padding: EdgeInsets.all(25),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        blurRadius: 10,
+                        offset: Offset(0, 5),
                       ),
-                      filled: true,
-                      fillColor: Colors.white,
-                    ),
+                    ],
                   ),
-                  SizedBox(height: 15),
-
-                  // Password Input
-                  TextField(
-                    controller: passwordController,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.lock, color: Color(0xFF5B0583)),
-                      hintText: 'Password',
-                      hintStyle: TextStyle(color: Colors.black54),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide: BorderSide(color: Color(0xFF5B0583)),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Login',
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
                       ),
-                      filled: true,
-                      fillColor: Colors.white,
-                    ),
+                      SizedBox(height: 20),
+
+                      // Username Input
+                      TextField(
+                        controller: usernameController,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.person, color: Colors.grey),
+                          hintText: 'Username',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide: BorderSide.none,
+                          ),
+                          filled: true,
+                          fillColor: Colors.grey[200],
+                        ),
+                      ),
+                      SizedBox(height: 15),
+
+                      // Password Input
+                      TextField(
+                        controller: passwordController,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.lock, color: Colors.grey),
+                          hintText: 'Password',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide: BorderSide.none,
+                          ),
+                          filled: true,
+                          fillColor: Colors.grey[200],
+                        ),
+                      ),
+                      SizedBox(height: 10),
+
+                      // Error Message
+                      if (errorMessage.isNotEmpty)
+                        Padding(
+                          padding: EdgeInsets.only(bottom: 10),
+                          child: Text(
+                            errorMessage,
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        ),
+
+                      // Tombol Login
+                      SizedBox(height: 15),
+                      ElevatedButton(
+                        onPressed: _handleLogin,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color(0xFF5B0583),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 40, vertical: 15),
+                        ),
+                        child: Text(
+                          "LOGIN",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 15),
+
+                      // Link untuk Sign Up
+                      TextButton(
+                        onPressed: () {},
+                        child: Text(
+                          "Don't have any account? Sign Up",
+                          style: TextStyle(color: Colors.grey[600]),
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(height: 10),
-
-                  // Error Message
-                  if (errorMessage.isNotEmpty)
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 10),
-                      child: Text(
-                        errorMessage,
-                        style: TextStyle(color: Colors.red),
-                      ),
-                    ),
-
-                  // Tombol Login
-                  SizedBox(height: 15),
-                  ElevatedButton(
-                    onPressed: _handleLogin,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF5B0583), // Warna tombol
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-                    ),
-                    child: Text(
-                      "LOGIN",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
